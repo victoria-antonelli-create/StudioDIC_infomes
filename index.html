@@ -50,5 +50,5 @@ function pdf(){if(!$("client").value||!$("job").value){alert("Completá Cliente 
 $("rn").textContent=$("num").value;$("rd").textContent=new Date($("date").value+"T12:00").toLocaleDateString("es-AR");
 $("rc").textContent=$("client").value;$("rj").textContent=$("job").value;$("rr").textContent=$("resp").value;$("rs").textContent=$("status").value;
 $("rw").textContent=$("work").value;$("rm").textContent=$("materials").value;$("ro").textContent=$("notes").value;
-$("rp").innerHTML="";[...$("photos").files].forEach(f=>{let i=document.createElement("img");i.src=URL.createObjectURL(f);$("rp").appendChild(i)});localStorage.setItem("dic_n",n);window.print()}
+$("rp").innerHTML="";[...$("photos").files].forEach(f=>{let i=document.createElement("img");i.src=URL.createObjectURL(f);$("rp").appendChild(i)});localStorage.setItem("dic_n",n);document.title = "Informe " + $("num").value + " - " + $("client").value; window.print()}
 </script></body></html>
