@@ -54,12 +54,9 @@ $("num").value=String(n).padStart(3,"0");$("date").value=new Date().toISOString(
 function pdf(){
   const cliente=$("client").value.trim();
   const obra=$("job").value.trim();
-
   if(!cliente||!obra){
     alert("Completá Cliente y Obra / domicilio");
-    return;
-  }
-
+    return;}
   $("rn").textContent=$("num").value;
   $("rd").textContent=$("date").value
     ? new Date($("date").value+"T12:00").toLocaleDateString("es-AR")
@@ -71,20 +68,13 @@ function pdf(){
   $("re").textContent=$("equipo").value;
   $("rw").textContent=$("work").value;
   $("ro").textContent=$("notes").value;
-
   $("rp").innerHTML="";
-
   [...$("photos").files].forEach(f=>{
     const img=document.createElement("img");
     img.src=URL.createObjectURL(f);
     $("rp").appendChild(img);
   });
-
   localStorage.setItem("dic_n",n);
-
   document.title="Informe "+$("num").value+" - "+cliente;
-
   setTimeout(()=>{
-    window.print();
-  },300);
-}
+    window.print();}
