@@ -51,9 +51,40 @@ button{width:100%;padding:13px;border:0;border-radius:9px;font-weight:bold;margi
 <script>
 let n=Number(localStorage.getItem("dic_n")||0)+1;const $=x=>document.getElementById(x);
 $("num").value=String(n).padStart(3,"0");$("date").value=new Date().toISOString().slice(0,10);
-function pdf(){if(!$("client").value||!$("job").value){alert("Completá Cliente y Obra.");return}
-$("rn").textContent=$("num").value;$("rd").textContent=new Date($("date").value+"T12:00").toLocaleDateString("es-AR");
-$("rc").textContent=$("client").value;$("ri").textContent=$("inicio").value;$("rf").textContent=$("fin").value;$("rj").textContent=$("job").value;$("re").textContent=$("equipo").value;
-$("rw").textContent=$("work").value;$("ro").textContent=$("notes").value;
-$("rp").innerHTML="";[...$("photos").files].forEach(f=>{let i=document.createElement("img");i.src=URL.createObjectURL(f);$("rp").appendChild(i)});localStorage.setItem("dic_n",n);document.title = "Informe " + $("num").value + " - " + $("client").value; window.print()}
-</script></body></html>
+function pdf(){
+  const cliente=$("client").value.trim();
+  const obra=$("job").value.trim();
+
+  if(!cliente||!obra){
+    alert("Completá Cliente y Obra / domicilio");
+    return;
+  }
+
+  $("rn").textContent=$("num").value;
+  $("rd").textContent=$("date").value
+    ? new Date($("date").value+"T12:00").toLocaleDateString("es-AR")
+    : "";
+  $("ri").textContent=$("inicio").value;
+  $("rf").textContent=$("fin").value;
+  $("rc").textContent=cliente;
+  $("rj").textContent=obra;
+  $("re").textContent=$("equipo").value;
+  $("rw").textContent=$("work").value;
+  $("ro").textContent=$("notes").value;
+
+  $("rp").innerHTML="";
+
+  [...$("photos").files].forEach(f=>{
+    const img=document.createElement("img");
+    img.src=URL.createObjectURL(f);
+    $("rp").appendChild(img);
+  });
+
+  localStorage.setItem("dic_n",n);
+
+  document.title="Informe "+$("num").value+" - "+cliente;
+
+  setTimeout(()=>{
+    window.print();
+  },300);
+}
